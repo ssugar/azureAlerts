@@ -1,16 +1,11 @@
-function New-AzureAlert {
+function Update-AzureAlert {
 
    <#
 	.SYNOPSIS
-	New-AzureAlert defines a new monitoring alert to an existing Cloud
+	Update-AzureAlert updates monitoring alerts for an existing Cloud
 	Service deployment.
 	.DESCRIPTION
-	New-AzureAlert defines a new monitoring alert to an existing Cloud
-	Service deployment
-	for IaaS Virtual Machines or PaaS Web/Worker roles.
-	For demonstration purposes only.
-	No support or warranty is supplied or inferred.
-	Use at your own risk.
+	Update-AzureAlert updates monitoring alerts for an Azure Subscription
 	.PARAMETER subscriptionId
 	The Id of the Azure Subscription in which the Cloud Service is
 	deployed
@@ -75,8 +70,9 @@ function New-AzureAlert {
 	provisioned.
 	.NOTES
 	Version:        1.0
-	Creation Date:  Nov 8, 2014
-	Author:         Keith Mayer ( http://KeithMayer.com )
+	Creation Date:  April 15, 2015
+	Author:         Scott Sugar
+	Inspiration: 	Keith Mayer ( http://KeithMayer.com )
 	Change:         Initial function development
 	#>
 
@@ -105,27 +101,29 @@ function New-AzureAlert {
 			"Accept" = "application/json"
 		}
 		$contentType = "application/json;charset=utf-8"
-	   
-		$alertEnabled = "true"
-
-		if ($alertAdmins) {
-			$alertAdminsValue = "true"
-		} else {
-			$alertAdminsValue = "false"
-		}
 		   
 	}
 
 	process {
+		$alertListUri =
+			"https://management.core.windows.net/$subscriptionID/services/monitoring/alertrules"
 
-		$alertId = ([GUID]::NewGuid()).Guid
+		$alerts = Invoke-RestMethod `
+			-Uri $alertListUri `
+			-Certificate $certificate `
+			-Method Get `
+			-Headers $requestHeader `
+			-ContentType $contentType
 
+		$rule = $alerts.Value | ?{$_.Name -eq $alertName} | Select Id
+		$ruleID = $rule.Id
+	
 		$alertManagementUri =
-			"https://management.core.windows.net/$subscriptionId/services/monitoring/alertrules/$alertID"
+			"https://management.core.windows.net/$subscriptionID/services/monitoring/alertrules/$ruleID"
 
 		$alertRequest = @"
 		{
-			"Id":  "$alertID",
+			"Id":  "$ruleID",
 			"Name":  "$alertName",
 			"IsEnabled":  $alertEnabled,
 			"Condition":  {
@@ -155,6 +153,7 @@ function New-AzureAlert {
 		[byte[]]$requestBody =
 			[System.Text.Encoding]::UTF8.GetBytes($alertRequest)
 
+		
 		$alertResponse = Invoke-RestMethod `
 			-Uri $alertManagementUri `
 			-Certificate $certificate `
@@ -164,6 +163,8 @@ function New-AzureAlert {
 			-ContentType $contentType
 
 	}
+	
+	
 
 	end {
 
@@ -177,8 +178,8 @@ function New-AzureAlert {
 			-Headers $requestHeader `
 			-ContentType $contentType
 
-		$alerts.Value | fl
-
+		$alerts.Value | fl	
+	
 	}
 	  
 }
