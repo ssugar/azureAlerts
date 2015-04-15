@@ -1,10 +1,11 @@
-function Remove-AzureAlert {
+function Get-AzureAlertIncident {
 
    <#
 	.SYNOPSIS
-	Remove-AzureAlert removes a monitoring alert setup.
+	Get-AzureAlertIncident lists monitoring alert incidents for an existing Cloud
+	Service deployment.
 	.DESCRIPTION
-	Remove-AzureAlert removes a monitoring alert setup.
+	Get-AzureAlertIncident lists monitoring alert incidents for an Azure Subscription
 	.PARAMETER subscriptionId
 	The Id of the Azure Subscription in which the Cloud Service is
 	deployed
@@ -59,18 +60,18 @@ function Remove-AzureAlert {
 		$rule = $alerts.Value | ?{$_.Name -eq $alertName} | Select Id
 		$ruleID = $rule.Id
 	
-		$alertDeleteUri =
-			"https://management.core.windows.net/$subscriptionID/services/monitoring/alertrules/$ruleID"
+		$alertListIncidentUri =
+			"https://management.core.windows.net/$subscriptionID/services/monitoring/alertrules/$ruleID/alertincidents"
 
-		$alertRemoval = Invoke-RestMethod `
-			-Uri $alertDeleteUri `
+		$incidents = Invoke-RestMethod `
+			-Uri $alertListIncidentUri `
 			-Certificate $certificate `
-			-Method Delete `
+			-Method Get `
 			-Headers $requestHeader `
 			-ContentType $contentType
 
-		$alertRemoval.Value
-	
+		$incidents.Value | fl
+
 	}
 
 	end {
