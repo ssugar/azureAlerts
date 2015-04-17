@@ -105,92 +105,31 @@ function Update-AzureAlert {
 	}
 
 	process {
-		$alertListUri =
-			"https://management.core.windows.net/$subscriptionID/services/monitoring/alertrules"
 
-		$alerts = Invoke-RestMethod `
-			-Uri $alertListUri `
-			-Certificate $certificate `
-			-Method Get `
-			-Headers $requestHeader `
-			-ContentType $contentType
+		Remove-AzureAlert -alertName $alertName `
+			-subscriptionId $subscriptionId `
+			-certificate $certificate `
 
-		$rule = $alerts.Value | ?{$_.Name -eq $alertName} | Select Id
-		$ruleID = $rule.Id
 	
-		$alertDeleteUri =
-			"https://management.core.windows.net/$subscriptionID/services/monitoring/alertrules/$ruleID"
-
-		$alertRemoval = Invoke-RestMethod `
-			-Uri $alertDeleteUri `
-			-Certificate $certificate `
-			-Method Delete `
-			-Headers $requestHeader `
-			-ContentType $contentType
-
-		$alertRemoval.Value
-
-		$alertManagementUri =
-			"https://management.core.windows.net/$subscriptionId/services/monitoring/alertrules/$ruleID"
-
-		$alertRequest = @"
-		{
-			"Id":  "$ruleID",
-			"Name":  "$alertName",
-			"IsEnabled":  $alertEnabled,
-			"Condition":  {
-							  "odata.type":  "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition",
-							  "DataSource":  {
-												 "odata.type":  "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource",
-												 "ResourceId":  "/hostedservices/$cloudServiceName/deployments/$deploymentName/roles/$roleName",
-												 "MetricNamespace":  "",
-												 "MetricName":  "$metricName"
-											 },
-							  "Operator": "$metricOperator",
-							  "Threshold":  $metricThreshold,
-							  "WindowSize":  "$metricWindowSize"
-						  },
-			"Actions":  [
-							{
-								"odata.type":  "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction",
-								"SendToServiceOwners":  $alertAdminsValue,
-								"CustomEmails": [
-									"$alertOther"
-								]
-							}
-						]
-		}
-"@
-
-		[byte[]]$requestBody =
-			[System.Text.Encoding]::UTF8.GetBytes($alertRequest)
-
-		$alertResponse = Invoke-RestMethod `
-			-Uri $alertManagementUri `
-			-Certificate $certificate `
-			-Method Put `
-			-Headers $requestHeader `
-			-Body $requestBody `
-			-ContentType $contentType
-
+		New-AzureAlert -alertName $alertName `
+		    -alertDescription $alertDescription `
+			-subscriptionId $subscriptionId `
+			-certificate $certificate `
+			-cloudServiceName $cloudServiceName `
+			-roleName $roleName `
+			-deploymentName $deploymentName `
+			-metricName $metricName `
+			-metricWindowSize $metricWindowSize `
+			-metricOperator $metricOperator `
+			-metricThreshold $metricThreshold `
+			-alertAdmins $alertAdmins `
+			-alertOther $alertOther
 
 	}
 	
 	
 
 	end {
-
-		$alertListUri =
-			"https://management.core.windows.net/$subscriptionID/services/monitoring/alertrules"
-
-		$alerts = Invoke-RestMethod `
-			-Uri $alertListUri `
-			-Certificate $certificate `
-			-Method Get `
-			-Headers $requestHeader `
-			-ContentType $contentType
-
-		$alerts.Value | fl	
 	
 	}
 	  
