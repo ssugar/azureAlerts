@@ -74,10 +74,11 @@ function New-AzureAlert {
 	json output for alert rule configuration that was successfully
 	provisioned.
 	.NOTES
-	Version:        1.0
+	Version:        1.1
 	Creation Date:  Nov 8, 2014
+	Modified Date: 	April 17, 2015
 	Author:         Keith Mayer ( http://KeithMayer.com )
-	Change:         Initial function development
+	Modifications:  Scott Sugar
 	#>
 
 	[CmdletBinding()]
@@ -109,8 +110,7 @@ function New-AzureAlert {
 		[Parameter(Mandatory=$true, HelpMessage="Alert threshold")]
 		[decimal]$metricThreshold,
 		[Parameter(Mandatory=$true, HelpMessage="True or False")]
-		[ValidateSet($true, $false)]
-		[boolean]$alertAdmins,
+		[boolean]$alertAdmins=$false,
 		[Parameter(Mandatory=$true, HelpMessage="Other email addresses to alert")]
 		[string]$alertOther
 	)
