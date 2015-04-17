@@ -27,7 +27,9 @@ function Get-AzureAlert {
 	[CmdletBinding()]
 	param
 	(
+		[Parameter(Mandatory=$true)]
 		[string]$subscriptionId,
+		[Parameter(Mandatory=$true)]
 		[object]$certificate
 	)
 

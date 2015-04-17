@@ -30,8 +30,11 @@ function Remove-AzureAlert {
 	[CmdletBinding()]
 	param
 	(
+		[Parameter(Mandatory=$true)]
 		[string]$subscriptionId,
+		[Parameter(Mandatory=$true)]
 		[object]$certificate,
+		[Parameter(Mandatory=$true, HelpMessage="Name of Alert you want to Remove")]
 		[string]$alertName
 	)
 

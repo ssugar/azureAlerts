@@ -79,18 +79,34 @@ function Update-AzureAlert {
 	[CmdletBinding()]
 	param
 	(
+		[Parameter(Mandatory=$true)]
 		[string]$subscriptionId,
+		[Parameter(Mandatory=$true)]
 		[object]$certificate,
+		[Parameter(Mandatory=$true, HelpMessage="Name of the cloud service")]
 		[string]$cloudServiceName,
+		[Parameter(Mandatory=$true, HelpMessage="Name of deployment, usually same as cloud service name")]
 		[string]$deploymentName,
+		[Parameter(Mandatory=$true, HelpMessage="Name of role, usually same as cloud service name")]
 		[string]$roleName,
+		[Parameter(Mandatory=$true, HelpMessage="Name of Alert to Update")]
 		[string]$alertName,
+		[Parameter(Mandatory=$true, HelpMessage="Description of Alert")]
 		[string]$alertDescription,
+		[Parameter(Mandatory=$true, HelpMessage="Percentage CPU, Disk Read Bytes/Sec, Disk Write Bytes/Sec, Network In, Network Out")]
+		[ValidateSet("Percentage CPU", "Disk Read Bytes/Sec", "Disk Write Bytes/Sec", "Network In", "Network Out")]
 		[string]$metricName,
+		[Parameter(Mandatory=$true, HelpMessage="PT5M, PT15M, PT30M, PT45M, PT60M")]
+		[ValidateSet("PT5M", "PT15M", "PT30M", "PT45M", "PT60M")]
 		[string]$metricWindowSize,
+		[Parameter(Mandatory=$true, HelpMessage="GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual")]
+		[ValidateSet("GreaterThan", "GreaterThanOrEqual", "LessThan", "LessThanOrEqual")]
 		[string]$metricOperator,
+		[Parameter(Mandatory=$true, HelpMessage="Alert threshold")]
 		[decimal]$metricThreshold,
-		[boolean]$alertAdmins,
+		[Parameter(Mandatory=$true, HelpMessage="True or False")]
+		[boolean]$alertAdmins=$false,
+		[Parameter(Mandatory=$true, HelpMessage="Other email addresses to alert")]
 		[string]$alertOther
 	)
 
