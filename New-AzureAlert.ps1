@@ -135,51 +135,64 @@ function New-AzureAlert {
 
 	process {
 
-		$alertId = ([GUID]::NewGuid()).Guid
-
-		$alertManagementUri =
-			"https://management.core.windows.net/$subscriptionId/services/monitoring/alertrules/$alertID"
-
-		$alertRequest = @"
-		{
-			"Id":  "$alertID",
-			"Name":  "$alertName",
-			"IsEnabled":  $alertEnabled,
-			"Condition":  {
-							  "odata.type":  "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition",
-							  "DataSource":  {
-												 "odata.type":  "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource",
-												 "ResourceId":  "/hostedservices/$cloudServiceName/deployments/$deploymentName/roles/$roleName",
-												 "MetricNamespace":  "",
-												 "MetricName":  "$metricName"
-											 },
-							  "Operator": "$metricOperator",
-							  "Threshold":  $metricThreshold,
-							  "WindowSize":  "$metricWindowSize"
-						  },
-			"Actions":  [
-							{
-								"odata.type":  "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction",
-								"SendToServiceOwners":  $alertAdminsValue,
-								"CustomEmails": [
-									"$alertOther"
-								]
-							}
-						]
+		$duplicateAlertName = $false
+		$alertListing = Get-AzureAlert -subscriptionId $subscriptionId -certificate $certificate
+		foreach($alertItem in $alertListing){
+		if($alertItem.Name -eq $alertName){
+				$duplicateAlertName = $true
+			}
 		}
+		
+		if($duplicateAlertName -eq $true){
+			Write-Host "Duplicate Alert Name Detected.  Please use unique alert names"
+		}
+		else
+		{
+			$alertId = ([GUID]::NewGuid()).Guid
+
+			$alertManagementUri =
+				"https://management.core.windows.net/$subscriptionId/services/monitoring/alertrules/$alertID"
+
+			$alertRequest = @"
+			{
+				"Id":  "$alertID",
+				"Name":  "$alertName",
+				"IsEnabled":  $alertEnabled,
+				"Condition":  {
+								  "odata.type":  "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition",
+								  "DataSource":  {
+													 "odata.type":  "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource",
+													 "ResourceId":  "/hostedservices/$cloudServiceName/deployments/$deploymentName/roles/$roleName",
+													 "MetricNamespace":  "",
+													 "MetricName":  "$metricName"
+												 },
+								  "Operator": "$metricOperator",
+								  "Threshold":  $metricThreshold,
+								  "WindowSize":  "$metricWindowSize"
+							  },
+				"Actions":  [
+								{
+									"odata.type":  "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction",
+									"SendToServiceOwners":  $alertAdminsValue,
+									"CustomEmails": [
+										"$alertOther"
+									]
+								}
+							]
+			}
 "@
 
-		[byte[]]$requestBody =
-			[System.Text.Encoding]::UTF8.GetBytes($alertRequest)
+			[byte[]]$requestBody =
+				[System.Text.Encoding]::UTF8.GetBytes($alertRequest)
 
-		$alertResponse = Invoke-RestMethod `
-			-Uri $alertManagementUri `
-			-Certificate $certificate `
-			-Method Put `
-			-Headers $requestHeader `
-			-Body $requestBody `
-			-ContentType $contentType
-
+			$alertResponse = Invoke-RestMethod `
+				-Uri $alertManagementUri `
+				-Certificate $certificate `
+				-Method Put `
+				-Headers $requestHeader `
+				-Body $requestBody `
+				-ContentType $contentType
+		}
 	}
 
 	end {
