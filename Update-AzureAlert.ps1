@@ -118,8 +118,20 @@ function Update-AzureAlert {
 		$rule = $alerts.Value | ?{$_.Name -eq $alertName} | Select Id
 		$ruleID = $rule.Id
 	
-		$alertManagementUri =
+		$alertDeleteUri =
 			"https://management.core.windows.net/$subscriptionID/services/monitoring/alertrules/$ruleID"
+
+		$alertRemoval = Invoke-RestMethod `
+			-Uri $alertDeleteUri `
+			-Certificate $certificate `
+			-Method Delete `
+			-Headers $requestHeader `
+			-ContentType $contentType
+
+		$alertRemoval.Value
+
+		$alertManagementUri =
+			"https://management.core.windows.net/$subscriptionId/services/monitoring/alertrules/$ruleID"
 
 		$alertRequest = @"
 		{
@@ -153,7 +165,6 @@ function Update-AzureAlert {
 		[byte[]]$requestBody =
 			[System.Text.Encoding]::UTF8.GetBytes($alertRequest)
 
-		
 		$alertResponse = Invoke-RestMethod `
 			-Uri $alertManagementUri `
 			-Certificate $certificate `
@@ -161,6 +172,7 @@ function Update-AzureAlert {
 			-Headers $requestHeader `
 			-Body $requestBody `
 			-ContentType $contentType
+
 
 	}
 	
