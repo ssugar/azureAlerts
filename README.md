@@ -1,9 +1,12 @@
 # azureAlerts
 Powershell Module to manage Azure Alert Rules via the Azure Service Management REST API.
 
+* [Prepare](#prepare)
+* [Usage](#usage)
+
 Most of the New-AzureAlert function, and inspiration for all of this from Keith Mayer from [here](http://blogs.technet.com/b/keithmayer/archive/2014/11/08/scripts-to-tools-automate-monitoring-alert-rules-in-microsoft-azure-with-powershell-and-the-azure-service-management-rest-api.aspx)
 
-##Prepare to use the Module##
+##Prepare to use the Module <a id="prepare"></a>##
 You'll need to connect to your azure subscription via the Get-AzurePublishSettingsFile method, not the Add-AzureAccount method.
 
 ####Download Azure Publish Settings File####
@@ -25,7 +28,7 @@ Note: If you've previously authenticated to your Azure subscription via Azure AD
 	cd azureAlerts
     Import-Module .\AzureAlerts.psd1
 	
-##Using the Module##
+##Using the Module <a id="usage"></a>##
 
 ####Get-AzureAlert####
 
