@@ -100,9 +100,9 @@ function New-AzureAlert {
 		[string]$metricOperator,
 		[Parameter(Mandatory=$true, HelpMessage="Alert threshold")]
 		[decimal]$metricThreshold,
-		[Parameter(Mandatory=$true, HelpMessage="True or False")]
+		[Parameter(Mandatory=$false, HelpMessage="True or False")]
 		[boolean]$alertAdmins=$false,
-		[Parameter(Mandatory=$true, HelpMessage="Other email addresses to alert")]
+		[Parameter(Mandatory=$false, HelpMessage="Other email addresses to alert")]
 		[string]$alertOther
 	)
 
@@ -191,18 +191,6 @@ function New-AzureAlert {
 	}
 
 	end {
-
-		$alertListUri =
-			"https://management.core.windows.net/$subscriptionID/services/monitoring/alertrules"
-
-		$alerts = Invoke-RestMethod `
-			-Uri $alertListUri `
-			-Certificate $certificate `
-			-Method Get `
-			-Headers $requestHeader `
-			-ContentType $contentType
-
-		$alerts.Value | fl
 
 	}
 	  

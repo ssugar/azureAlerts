@@ -95,10 +95,10 @@ function Update-AzureAlert {
 		[string]$metricOperator,
 		[Parameter(Mandatory=$true, HelpMessage="Alert threshold")]
 		[decimal]$metricThreshold,
-		[Parameter(Mandatory=$true, HelpMessage="True or False")]
+		[Parameter(Mandatory=$false, HelpMessage="True or False")]
 		[boolean]$alertAdmins=$false,
-		[Parameter(Mandatory=$true, HelpMessage="Other email addresses to alert")]
-		[string]$alertOther
+		[Parameter(Mandatory=$false, HelpMessage="Other email addresses to alert")]
+		[string]$alertOther=""
 	)
 
 	begin {

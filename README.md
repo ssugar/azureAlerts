@@ -93,13 +93,12 @@ This adds a new alert rule to a cloud service in the current subscription.  This
  - "LessThan"
  - "LessThanOrEqual"
 + **metricThreshold** - Numeric value to which metricName is compared to determine if alert should be issued.
-+ **alertAdmins** - Indicates whether subscription administrators and co-administrators should be alerted via email. Valid alertAdmins values include:
- - True
- - False
-+ **alertOther** - Email address for additional application administrator that should be alerted via email.
 
 ######Optional Parameters######
-+ None
++ **alertAdmins** - Indicates whether subscription administrators and co-administrators should be alerted via email. **Defaults to $false**. Valid alertAdmins values include:
+ - $true
+ - $false
++ **alertOther** - Email address for additional application administrator that should be alerted via email.
 
 ___
 
@@ -133,13 +132,12 @@ This currently removes and then re-creates a rule to a cloud service in the curr
  - "LessThan"
  - "LessThanOrEqual"
 + **metricThreshold** - Numeric value to which metricName is compared to determine if alert should be issued.
-+ **alertAdmins** - Indicates whether subscription administrators and co-administrators should be alerted via email. Valid alertAdmins values include:
- - True
- - False
-+ **alertOther** - Email address for additional application administrator that should be alerted via email.
 
 ######Optional Parameters######
-+ None
++ **alertAdmins** - Indicates whether subscription administrators and co-administrators should be alerted via email. **Defaults to $false**. Valid alertAdmins values include:
+ - $true
+ - $false
++ **alertOther** - Email address for additional application administrator that should be alerted via email.
 
 ___
 
