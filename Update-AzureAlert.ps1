@@ -6,11 +6,6 @@ function Update-AzureAlert {
 	Service deployment.
 	.DESCRIPTION
 	Update-AzureAlert updates monitoring alerts for an Azure Subscription
-	.PARAMETER subscriptionId
-	The Id of the Azure Subscription in which the Cloud Service is
-	deployed
-	.PARAMETER certificate
-	Certificate used for authenticating to Azure subscription Id
 	.PARAMETER cloudServiceName
 	The name of an existing Cloud Service, as reported
 	by Get-AzureService
@@ -79,10 +74,6 @@ function Update-AzureAlert {
 	[CmdletBinding()]
 	param
 	(
-		[Parameter(Mandatory=$true)]
-		[string]$subscriptionId,
-		[Parameter(Mandatory=$true)]
-		[object]$certificate,
 		[Parameter(Mandatory=$true, HelpMessage="Name of the cloud service")]
 		[string]$cloudServiceName,
 		[Parameter(Mandatory=$true, HelpMessage="Name of deployment, usually same as cloud service name")]
@@ -117,20 +108,16 @@ function Update-AzureAlert {
 			"Accept" = "application/json"
 		}
 		$contentType = "application/json;charset=utf-8"
-		   
+
 	}
 
 	process {
 
-		Remove-AzureAlert -alertName $alertName `
-			-subscriptionId $subscriptionId `
-			-certificate $certificate `
+		Remove-AzureAlert -alertName $alertName
 
 	
 		New-AzureAlert -alertName $alertName `
 		    -alertDescription $alertDescription `
-			-subscriptionId $subscriptionId `
-			-certificate $certificate `
 			-cloudServiceName $cloudServiceName `
 			-roleName $roleName `
 			-deploymentName $deploymentName `

@@ -6,11 +6,6 @@ function Get-AzureAlertIncident {
 	Service deployment.
 	.DESCRIPTION
 	Get-AzureAlertIncident lists monitoring alert incidents for an Azure Subscription
-	.PARAMETER subscriptionId
-	The Id of the Azure Subscription in which the Cloud Service is
-	deployed
-	.PARAMETER certificate
-	Certificate used for authenticating to Azure subscription Id
 	.PARAMETER alertName
 	The name for the new Alert to be removed.
 	The name will contain only letters, numbers, commas, and periods.
@@ -31,10 +26,6 @@ function Get-AzureAlertIncident {
 	[CmdletBinding()]
 	param
 	(
-		[Parameter(Mandatory=$true)]
-		[string]$subscriptionId,
-		[Parameter(Mandatory=$true)]
-		[object]$certificate,
 		[Parameter(Mandatory=$true, HelpMessage="Name of Alert you want to get incidents for")]
 		[string]$alertName
 	)
@@ -46,6 +37,10 @@ function Get-AzureAlertIncident {
 			"Accept" = "application/json"
 		}
 		$contentType = "application/json;charset=utf-8"
+
+		$subInfo = Get-AzureSubscription -Current -ExtendedDetails
+		$subscriptionID = $subInfo.SubscriptionId
+		$certificate = $subInfo.Certificate
 		   
 	}
 

@@ -2,20 +2,11 @@ function Get-AzureAlert {
 
    <#
 	.SYNOPSIS
-	Get-AzureAlert lists monitoring alerts for an existing Cloud
-	Service deployment.
+	Get-AzureAlert lists monitoring alerts for the Current Azure Subscription
 	.DESCRIPTION
-	Get-AzureAlert lists monitoring alerts for an Azure Subscription
-	.PARAMETER subscriptionId
-	The Id of the Azure Subscription in which the Cloud Service is
-	deployed
-	.PARAMETER certificate
-	Certificate used for authenticating to Azure subscription Id
-	.INPUTS
-	Parameters above.
+	Get-AzureAlert lists monitoring alerts for the Current Azure Subscription
 	.OUTPUTS
-	json output for alert rule configuration that was successfully
-	provisioned.
+	Alert Rule Configurations for Current Subscription
 	.NOTES
 	Version:        1.0
 	Creation Date:  April 15, 2015
@@ -27,10 +18,6 @@ function Get-AzureAlert {
 	[CmdletBinding()]
 	param
 	(
-		[Parameter(Mandatory=$true)]
-		[string]$subscriptionId,
-		[Parameter(Mandatory=$true)]
-		[object]$certificate
 	)
 
 	begin {
@@ -40,6 +27,10 @@ function Get-AzureAlert {
 			"Accept" = "application/json"
 		}
 		$contentType = "application/json;charset=utf-8"
+
+		$subInfo = Get-AzureSubscription -Current -ExtendedDetails
+		$subscriptionID = $subInfo.SubscriptionId
+		$certificate = $subInfo.Certificate
 		   
 	}
 

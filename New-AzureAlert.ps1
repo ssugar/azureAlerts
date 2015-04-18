@@ -11,11 +11,6 @@ function New-AzureAlert {
 	For demonstration purposes only.
 	No support or warranty is supplied or inferred.
 	Use at your own risk.
-	.PARAMETER subscriptionId
-	The Id of the Azure Subscription in which the Cloud Service is
-	deployed
-	.PARAMETER certificate
-	Certificate used for authenticating to Azure subscription Id
 	.PARAMETER cloudServiceName
 	The name of an existing Cloud Service, as reported
 	by Get-AzureService
@@ -84,10 +79,6 @@ function New-AzureAlert {
 	[CmdletBinding()]
 	param
 	(
-		[Parameter(Mandatory=$true)]
-		[string]$subscriptionId,
-		[Parameter(Mandatory=$true)]
-		[object]$certificate,
 		[Parameter(Mandatory=$true, HelpMessage="Name of the cloud service")]
 		[string]$cloudServiceName,
 		[Parameter(Mandatory=$true, HelpMessage="Name of deployment, usually same as cloud service name")]
@@ -130,13 +121,17 @@ function New-AzureAlert {
 		} else {
 			$alertAdminsValue = "false"
 		}
+
+		$subInfo = Get-AzureSubscription -Current -ExtendedDetails
+		$subscriptionId = $subInfo.SubscriptionId
+		$certificate = $subInfo.Certificate
 		   
 	}
 
 	process {
 
 		$duplicateAlertName = $false
-		$alertListing = Get-AzureAlert -subscriptionId $subscriptionId -certificate $certificate
+		$alertListing = Get-AzureAlert
 		foreach($alertItem in $alertListing){
 		if($alertItem.Name -eq $alertName){
 				$duplicateAlertName = $true

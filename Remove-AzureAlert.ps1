@@ -5,11 +5,6 @@ function Remove-AzureAlert {
 	Remove-AzureAlert removes a monitoring alert setup.
 	.DESCRIPTION
 	Remove-AzureAlert removes a monitoring alert setup.
-	.PARAMETER subscriptionId
-	The Id of the Azure Subscription in which the Cloud Service is
-	deployed
-	.PARAMETER certificate
-	Certificate used for authenticating to Azure subscription Id
 	.PARAMETER alertName
 	The name for the new Alert to be removed.
 	The name will contain only letters, numbers, commas, and periods.
@@ -30,10 +25,6 @@ function Remove-AzureAlert {
 	[CmdletBinding()]
 	param
 	(
-		[Parameter(Mandatory=$true)]
-		[string]$subscriptionId,
-		[Parameter(Mandatory=$true)]
-		[object]$certificate,
 		[Parameter(Mandatory=$true, HelpMessage="Name of Alert you want to Remove")]
 		[string]$alertName
 	)
@@ -45,6 +36,10 @@ function Remove-AzureAlert {
 			"Accept" = "application/json"
 		}
 		$contentType = "application/json;charset=utf-8"
+
+		$subInfo = Get-AzureSubscription -Current -ExtendedDetails
+		$subscriptionID = $subInfo.SubscriptionId
+		$certificate = $subInfo.Certificate
 		   
 	}
 
