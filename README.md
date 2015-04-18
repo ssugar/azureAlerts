@@ -46,33 +46,33 @@ Optional Parameters:
 This adds a new alert rule to a cloud service in the current subscription.  This function will require you to have unique names for your alerts.  That is not a requirement of the Azure service management API, but makes it easier to remove alerts by referencing their name rather than ID.
 
 Required Parameters:
-+ cloudServiceName - The name of an existing Cloud Service, as reported by Get-AzureService
-+ deploymentName - The name of an existing deployment within a Cloud Service, as reported by Get-AzureDeployment
-+ roleName - The name of an existing role within a Cloud Service deployment, as	reported by Get-AzureDeployment
-+ alertName - The name for the new Alert to be added. The name can contain only letters, numbers, commas, and periods. The name can be up to 32 characters long.  Must be unique.
-+ alertDescription - Description for the new Alert to be added. The description can contain only letters, numbers, commas, and periods. The description can be up to 128 characters long.
-+ metricName - Name of the metric on which to associate an alert rule. Valid metricName values include:
++ **cloudServiceName** - The name of an existing Cloud Service, as reported by Get-AzureService
++ **deploymentName** - The name of an existing deployment within a Cloud Service, as reported by Get-AzureDeployment
++ **roleName** - The name of an existing role within a Cloud Service deployment, as	reported by Get-AzureDeployment
++ **alertName** - The name for the new Alert to be added. The name can contain only letters, numbers, commas, and periods. The name can be up to 32 characters long.  Must be unique.
++ **alertDescription** - Description for the new Alert to be added. The description can contain only letters, numbers, commas, and periods. The description can be up to 128 characters long.
++ **metricName** - Name of the metric on which to associate an alert rule. Valid metricName values include:
  - "Percentage CPU"
  - "Disk Read Bytes/Sec"
  - "Disk Write Bytes/Sec"
  - "Network In"
  - "Network Out"
-+ metricWindowSize - Rolling timeframe across which metric should be evaluated against threshold. Valid metricWindowSize values include:
++ **metricWindowSize** - Rolling timeframe across which metric should be evaluated against threshold. Valid metricWindowSize values include:
  - "PT5M" (5 min)
  - "PT15M" (15 min)
  - "PT30M" (30 min)
  - "PT45M" (45 min)
  - "PT60M" (60 min)
-+ metricOperator - Operator used to compare metricName against metricThreshold. Value metricOperator values include:
++ **metricOperator** - Operator used to compare metricName against metricThreshold. Value metricOperator values include:
  - "GreaterThan"
  - "GreaterThanOrEqual"
  - "LessThan"
  - "LessThanOrEqual"
-+ metricThreshold - Numeric value to which metricName is compared to determine if alert should be issued.
-+ alertAdmins - Indicates whether subscription administrators and co-administrators should be alerted via email. Valid alertAdmins values include:
++ **metricThreshold** - Numeric value to which metricName is compared to determine if alert should be issued.
++ **alertAdmins** - Indicates whether subscription administrators and co-administrators should be alerted via email. Valid alertAdmins values include:
  - True
  - False
-+ alertOther - Email address for additional application administrator that should be alerted via email.
++ **alertOther** - Email address for additional application administrator that should be alerted via email.
 
 Optional Parameters:
 + None
@@ -84,33 +84,33 @@ Optional Parameters:
 This currently removes and then re-creates a rule to a cloud service in the current subscription.  Issues encountered when trying to update a rule directly.   Possibly because the rule Id returned by the Azure Service Management API is different than the GUID used to create the rule.  The Delete method works with the different rule Id, but the Put method doesnt seem to.
 
 Required Parameters:
-+ cloudServiceName - The name of an existing Cloud Service, as reported by Get-AzureService
-+ deploymentName - The name of an existing deployment within a Cloud Service, as reported by Get-AzureDeployment
-+ roleName - The name of an existing role within a Cloud Service deployment, as	reported by Get-AzureDeployment
-+ alertName - The name for the new Alert to be added. The name can contain only letters, numbers, commas, and periods. The name can be up to 32 characters long.
-+ alertDescription - Description for the new Alert to be added. The description can contain only letters, numbers, commas, and periods. The description can be up to 128 characters long.
-+ metricName - Name of the metric on which to associate an alert rule. Valid metricName values include:
++ **cloudServiceName** - The name of an existing Cloud Service, as reported by Get-AzureService
++ **deploymentName** - The name of an existing deployment within a Cloud Service, as reported by Get-AzureDeployment
++ *roleName** - The name of an existing role within a Cloud Service deployment, as	reported by Get-AzureDeployment
++ **alertName** - The name for the new Alert to be added. The name can contain only letters, numbers, commas, and periods. The name can be up to 32 characters long.
++ **alertDescription** - Description for the new Alert to be added. The description can contain only letters, numbers, commas, and periods. The description can be up to 128 characters long.
++ **metricName** - Name of the metric on which to associate an alert rule. Valid metricName values include:
  - "Percentage CPU"
  - "Disk Read Bytes/Sec"
  - "Disk Write Bytes/Sec"
  - "Network In"
  - "Network Out"
-+ metricWindowSize - Rolling timeframe across which metric should be evaluated against threshold. Valid metricWindowSize values include:
++ **metricWindowSize** - Rolling timeframe across which metric should be evaluated against threshold. Valid metricWindowSize values include:
  - "PT5M" (5 min)
  - "PT15M" (15 min)
  - "PT30M" (30 min)
  - "PT45M" (45 min)
  - "PT60M" (60 min)
-+ metricOperator - Operator used to compare metricName against metricThreshold. Value metricOperator values include:
++ **metricOperator** - Operator used to compare metricName against metricThreshold. Value metricOperator values include:
  - "GreaterThan"
  - "GreaterThanOrEqual"
  - "LessThan"
  - "LessThanOrEqual"
-+ metricThreshold - Numeric value to which metricName is compared to determine if alert should be issued.
-+ alertAdmins - Indicates whether subscription administrators and co-administrators should be alerted via email. Valid alertAdmins values include:
++ **metricThreshold** - Numeric value to which metricName is compared to determine if alert should be issued.
++ **alertAdmins** - Indicates whether subscription administrators and co-administrators should be alerted via email. Valid alertAdmins values include:
  - True
  - False
-+ alertOther - Email address for additional application administrator that should be alerted via email.
++ **alertOther** - Email address for additional application administrator that should be alerted via email.
 
 Optional Parameters:
 + None
@@ -122,7 +122,7 @@ Optional Parameters:
 This will remove an alert rule from the current subscription based on the alertName
 
 Required Parameters:
-+ alertName - The name for the new Alert to be added. The name can contain only letters, numbers, commas, and periods. The name can be up to 32 characters long.
++ **alertName** - The name for the new Alert to be added. The name can contain only letters, numbers, commas, and periods. The name can be up to 32 characters long.
 
 Optional Parameters:
 + None
