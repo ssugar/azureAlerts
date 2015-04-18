@@ -36,7 +36,7 @@ This returns a listing of all alert rules configured in the current subscription
 Required Parameters:
 + None
 
- Optional Parameters:
+Optional Parameters:
 + None
 
 
