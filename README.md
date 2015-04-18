@@ -33,10 +33,10 @@ Note: If you've previously authenticated to your Azure subscription via Azure AD
 
 This returns a listing of all alert rules configured in the current subscription.
 
-Required Parameters:
+######Required Parameters######
 + None
 
-Optional Parameters:
+######Optional Parameters######
 + None
 
 ####New-AzureAlert####
@@ -45,7 +45,7 @@ Optional Parameters:
 
 This adds a new alert rule to a cloud service in the current subscription.  This function will require you to have unique names for your alerts.  That is not a requirement of the Azure service management API, but makes it easier to remove alerts by referencing their name rather than ID.
 
-Required Parameters:
+######Required Parameters######
 + **cloudServiceName** - The name of an existing Cloud Service, as reported by Get-AzureService
 + **deploymentName** - The name of an existing deployment within a Cloud Service, as reported by Get-AzureDeployment
 + **roleName** - The name of an existing role within a Cloud Service deployment, as	reported by Get-AzureDeployment
@@ -74,7 +74,7 @@ Required Parameters:
  - False
 + **alertOther** - Email address for additional application administrator that should be alerted via email.
 
-Optional Parameters:
+######Optional Parameters######
 + None
 
 ####Update-AzureAlert####
@@ -83,7 +83,7 @@ Optional Parameters:
 
 This currently removes and then re-creates a rule to a cloud service in the current subscription.  Issues encountered when trying to update a rule directly.   Possibly because the rule Id returned by the Azure Service Management API is different than the GUID used to create the rule.  The Delete method works with the different rule Id, but the Put method doesnt seem to.
 
-Required Parameters:
+######Required Parameters######
 + **cloudServiceName** - The name of an existing Cloud Service, as reported by Get-AzureService
 + **deploymentName** - The name of an existing deployment within a Cloud Service, as reported by Get-AzureDeployment
 + *roleName** - The name of an existing role within a Cloud Service deployment, as	reported by Get-AzureDeployment
@@ -112,17 +112,17 @@ Required Parameters:
  - False
 + **alertOther** - Email address for additional application administrator that should be alerted via email.
 
-Optional Parameters:
+######Optional Parameters######
 + None
 
 ####Remove-AzureAlert####
 
     Remove-AzureAlert -alertName "Name of your alert"
 
-This will remove an alert rule from the current subscription based on the alertName
+This will remove an alert rule from the current subscription based on the alertName.  If more than one alert rule has the same name, this will probably fail.  To try and avoid this, the New-AzureAlert function will not create a rule with a duplicate name.
 
-Required Parameters:
+######Required Parameters######
 + **alertName** - The name for the new Alert to be added. The name can contain only letters, numbers, commas, and periods. The name can be up to 32 characters long.
 
-Optional Parameters:
+######Optional Parameters######
 + None
