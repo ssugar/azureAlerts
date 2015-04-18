@@ -34,10 +34,10 @@ Note: If you've previously authenticated to your Azure subscription via Azure AD
 This returns a listing of all alert rules configured in the current subscription.
 
 Required Parameters:
- -None
++ None
 
  Optional Parameters:
- -None
++ None
 
 
 
