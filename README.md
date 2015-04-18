@@ -1,11 +1,10 @@
 # azureAlerts
-Powershell Functions to manage Azure alerts
+Powershell Module to manage Azure Alert Rules
 
-##Prepare to use the functions##
+Most of the New-AzureAlert function, and inspiration for all of this from Keith Mayer from [here](http://blogs.technet.com/b/keithmayer/archive/2014/11/08/scripts-to-tools-automate-monitoring-alert-rules-in-microsoft-azure-with-powershell-and-the-azure-service-management-rest-api.aspx)
 
-The below instructions, the New-AzureAlert function, and inspiration for all of this from Keith Mayer from [here](http://blogs.technet.com/b/keithmayer/archive/2014/11/08/scripts-to-tools-automate-monitoring-alert-rules-in-microsoft-azure-with-powershell-and-the-azure-service-management-rest-api.aspx)
-
-To authenticate to the Azure Service Management REST API endpoints, we'll be passing the subscription ID and management certificate for your Azure subscription.  To obtain your subscription ID and management certificate, you can use the following snippet of code:
+##Prepare to use the Module##
+You'll need to connect to your azure subscription via the Get-AzurePublishSettingsFile method, not the Add-AzureAccount method.
 
 ###Download Azure Publish Settings File###
 
@@ -15,13 +14,29 @@ To authenticate to the Azure Service Management REST API endpoints, we'll be pas
 
     Import-AzurePublishSettingsFile 'path-to-publish-settings-file'
 
-###Get your Azure subscription ID and certificate###
+Note: If you've previously authenticated to your Azure subscription via Azure AD credentials using the Add-AzureAccount cmdlet, you will need to remove the Azure subscription information cached in your local subscription data file by using the Remove-AzureSubscription cmdlet. If you do not perform this step, the management certificate required for the Azure Service Management REST API won't be available in the Powershell session and you will encounter errors.
 
-    $subscriptionName = 'your-subscription-name'
-    $subscription = Get-AzureSubscription -SubscriptionName $subscriptionName -ExtendedDetails 
-    $certificate = $subscription.Certificate
-    $subscriptionId = $subscription.SubscriptionId
+###Download the Module###
 
-Tip! If you've previously authenticated to your Azure subscription via Azure AD credentials using the Add-AzureAccount cmdlet, you may first need to remove the Azure subscription information cached in your local subscription data file by using the Remove-AzureSubscription cmdlet. If you do not perform this step, the management certificate may not be properly returned when calling the Get-AzureSubscription cmdlet above.
+    git clone https://github.com/ssugar/azureAlerts
+	
+###Import the Module###
+
+	cd azureAlerts
+    Import-Module .\AzureAlerts.psd1
+	
+##Using the Module##
+
+###Get-AzureAlert###
+
+    Get-AzureAlert
+
+This returns a listing of all alert rules configured in the current subscription,
+Required Parameters:
+ -None
+Optional Parameters:
+ -None
+
+
 
 
