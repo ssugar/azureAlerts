@@ -1,5 +1,5 @@
 # azureAlerts
-Powershell Module to manage Azure Alert Rules
+Powershell Module to manage Azure Alert Rules via the Azure Service Management REST API.
 
 Most of the New-AzureAlert function, and inspiration for all of this from Keith Mayer from [here](http://blogs.technet.com/b/keithmayer/archive/2014/11/08/scripts-to-tools-automate-monitoring-alert-rules-in-microsoft-azure-with-powershell-and-the-azure-service-management-rest-api.aspx)
 
