@@ -46,7 +46,9 @@ This returns a listing of all alert rules configured in the current subscription
 
 ######Optional Parameters######
 + None
+
 ___
+
 ####Get-AzureAlertIncident <a id="Get-AzureAlertIncident"></a>####
 
     Get-AzureAlertIncident -alertName "Name of Alert"
@@ -58,7 +60,9 @@ This returns a listing of all incidents for the alert rule specified including a
 
 ######Optional Parameters######
 + None
+
 ___
+
 ####New-AzureAlert <a id="New-AzureAlert"></a>####
 
     New-AzureAlert -cloudServiceName "Name of cloud service" -deploymentName "Name of deployment" -roleName "Name of role" -alertName "Name of alert" -alertDescription "Description of Alert" -metricName "Network Out" -metricWindowSize "PT15M" -metricOperator "GreaterThan" -metricThreshold "1000000" -alertAdmins $false -alertOther "email@company.com"
@@ -96,7 +100,9 @@ This adds a new alert rule to a cloud service in the current subscription.  This
 
 ######Optional Parameters######
 + None
+
 ___
+
 ####Update-AzureAlert <a id="Update-AzureAlert"></a>####
 
     Update-AzureAlert -cloudServiceName "Name of cloud service" -deploymentName "Name of deployment" -roleName "Name of role" -alertName "Name of alert" -alertDescription "Description of Alert" -metricName "Network Out" -metricWindowSize "PT15M" -metricOperator "GreaterThan" -metricThreshold "1000000" -alertAdmins $false -alertOther "email@company.com"
@@ -134,7 +140,9 @@ This currently removes and then re-creates a rule to a cloud service in the curr
 
 ######Optional Parameters######
 + None
+
 ___
+
 ####Remove-AzureAlert <a id="Remove-AzureAlert"></a>####
 
     Remove-AzureAlert -alertName "Name of your alert"
@@ -146,4 +154,5 @@ This will remove an alert rule from the current subscription based on the alertN
 
 ######Optional Parameters######
 + None
+
 ___
