@@ -111,7 +111,7 @@ This currently removes and then re-creates a rule to a cloud service in the curr
 ######Required Parameters######
 + **cloudServiceName** - The name of an existing Cloud Service, as reported by Get-AzureService
 + **deploymentName** - The name of an existing deployment within a Cloud Service, as reported by Get-AzureDeployment
-+ *roleName** - The name of an existing role within a Cloud Service deployment, as	reported by Get-AzureDeployment
++ **roleName** - The name of an existing role within a Cloud Service deployment, as	reported by Get-AzureDeployment
 + **alertName** - The name for the new Alert to be added. The name can contain only letters, numbers, commas, and periods. The name can be up to 32 characters long.
 + **alertDescription** - Description for the new Alert to be added. The description can contain only letters, numbers, commas, and periods. The description can be up to 128 characters long.
 + **metricName** - Name of the metric on which to associate an alert rule. Valid metricName values include:
