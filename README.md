@@ -31,10 +31,12 @@ Note: If you've previously authenticated to your Azure subscription via Azure AD
 
     Get-AzureAlert
 
-This returns a listing of all alert rules configured in the current subscription,
+This returns a listing of all alert rules configured in the current subscription.
+
 Required Parameters:
  -None
-Optional Parameters:
+
+ Optional Parameters:
  -None
 
 
