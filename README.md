@@ -1,11 +1,16 @@
 # azureAlerts
 Powershell Module to manage Azure Alert Rules via the Azure Service Management REST API.
 
-* [Prepare](#prepare)
-* [Usage](#usage)
-
 Most of the New-AzureAlert function, and inspiration for all of this from Keith Mayer from [here](http://blogs.technet.com/b/keithmayer/archive/2014/11/08/scripts-to-tools-automate-monitoring-alert-rules-in-microsoft-azure-with-powershell-and-the-azure-service-management-rest-api.aspx)
 
+* [Prepare](#prepare)
+* [Usage](#usage)
+ - [Get-AzureAlert](#Get-AzureAlert)
+ - [Get-AzureAlertIncident](#Get-AzureAlertIncident)
+ - [New-AzureAlert](#New-AzureAlert) 
+ - [Update-AzureAlert](#Update-AzureAlert)
+ - [Remove-AzureAlert](#Remove-AzureAlert)
+ 
 ##Prepare to use the Module <a id="prepare"></a>##
 You'll need to connect to your azure subscription via the Get-AzurePublishSettingsFile method, not the Add-AzureAccount method.
 
@@ -30,7 +35,7 @@ Note: If you've previously authenticated to your Azure subscription via Azure AD
 	
 ##Using the Module <a id="usage"></a>##
 
-####Get-AzureAlert####
+####Get-AzureAlert <a id="Get-AzureAlert"></a>####
 
     Get-AzureAlert
 
@@ -42,7 +47,19 @@ This returns a listing of all alert rules configured in the current subscription
 ######Optional Parameters######
 + None
 
-####New-AzureAlert####
+####Get-AzureAlertIncident <a id="Get-AzureAlertIncident"></a>####
+
+    Get-AzureAlertIncident -alertName "Name of Alert"
+
+This returns a listing of all incidents for the alert rule specified including alert time and resolved time.
+
+######Required Parameters######
++ **alertName** - The name of the alert rule you want to see the incident list for.
+
+######Optional Parameters######
++ None
+
+####New-AzureAlert <a id="New-AzureAlert"></a>####
 
     New-AzureAlert -cloudServiceName "Name of cloud service" -deploymentName "Name of deployment" -roleName "Name of role" -alertName "Name of alert" -alertDescription "Description of Alert" -metricName "Network Out" -metricWindowSize "PT15M" -metricOperator "GreaterThan" -metricThreshold "1000000" -alertAdmins $false -alertOther "email@company.com"
 
@@ -80,7 +97,7 @@ This adds a new alert rule to a cloud service in the current subscription.  This
 ######Optional Parameters######
 + None
 
-####Update-AzureAlert####
+####Update-AzureAlert <a id="Update-AzureAlert"></a>####
 
     Update-AzureAlert -cloudServiceName "Name of cloud service" -deploymentName "Name of deployment" -roleName "Name of role" -alertName "Name of alert" -alertDescription "Description of Alert" -metricName "Network Out" -metricWindowSize "PT15M" -metricOperator "GreaterThan" -metricThreshold "1000000" -alertAdmins $false -alertOther "email@company.com"
 
@@ -118,14 +135,14 @@ This currently removes and then re-creates a rule to a cloud service in the curr
 ######Optional Parameters######
 + None
 
-####Remove-AzureAlert####
+####Remove-AzureAlert <a id="Remove-AzureAlert"></a>####
 
     Remove-AzureAlert -alertName "Name of your alert"
 
 This will remove an alert rule from the current subscription based on the alertName.  If more than one alert rule has the same name, this will probably fail.  To try and avoid this, the New-AzureAlert function will not create a rule with a duplicate name.
 
 ######Required Parameters######
-+ **alertName** - The name for the new Alert to be added. The name can contain only letters, numbers, commas, and periods. The name can be up to 32 characters long.
++ **alertName** - The name of the alert to be removed.
 
 ######Optional Parameters######
 + None
